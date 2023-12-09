@@ -17,7 +17,7 @@ jobs:
       run: sudo apt-get install pandoc
 
     - name: Convert Markdown to PDF
-      run: pandoc -s ./input.md -o ./pdf/output.pdf
+      run: pandoc -s ./readme.md -o ./pdf/readme.pdf
 
     - name: Upload PDF as Release Artifact
       uses: actions/upload-artifact@v2
