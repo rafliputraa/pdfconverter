@@ -16,8 +16,14 @@ jobs:
     - name: Set up pandoc
       run: sudo apt-get install pandoc
 
-    - name: Convert Markdown to PDF
-      run: pandoc -s ./readme.md -o ./pdf/readme.pdf
+    - name: Install pdflatex
+      run: sudo apt-get install texlive-xetex
+
+    - name: Install LaTeX packages
+      run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra
+
+    - name: Run pandoc
+      run: pandoc -s ./readme.md -o ./pdf/readme.pdf --pdf-engine=xelatex
 
     - name: Upload PDF as Release Artifact
       uses: actions/upload-artifact@v2
