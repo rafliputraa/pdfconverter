@@ -24,7 +24,7 @@ jobs:
 
     - name: Run pandoc for each Markdown file
       run: |
-        for file in ./markdown/*.md; do
+        for file in ./*.md; do
           output_file="./pdf/$(basename "$file" .md).pdf"
           echo "Converting $file to $output_file"
           
