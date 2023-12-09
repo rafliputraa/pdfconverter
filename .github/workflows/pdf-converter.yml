@@ -20,7 +20,7 @@ jobs:
       run: sudo apt-get install texlive-xetex
 
     - name: Install LaTeX packages
-      run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra luaotfload
+      run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra texlive-luatex
 
     - name: Run pandoc
       run: pandoc -s ./syllabus.md -o ./pdf/syllabus.pdf --pdf-engine=xelatex
