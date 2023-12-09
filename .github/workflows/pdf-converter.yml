@@ -23,10 +23,14 @@ jobs:
       run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra
 
     - name: Run pandoc
-      run: pandoc -s ./readme.md -o ./pdf/readme.pdf --pdf-engine=xelatex
+      run: |
+        for file in ./*.md; do
+          output_file="./pdf/$(basename "$file" .md).pdf"
+          pandoc -s "$file" -o "$output_file" --pdf-engine=xelatex
+        done
 
     - name: Upload PDF as Release Artifact
       uses: actions/upload-artifact@v2
       with:
         name: release-artifact
-        path: ./pdf/readme.pdf
+        path: ./pdf
