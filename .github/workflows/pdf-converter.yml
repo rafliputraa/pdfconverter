@@ -20,21 +20,13 @@ jobs:
       run: sudo apt-get install texlive-xetex
 
     - name: Install LaTeX packages
-      run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra
+      run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra luaotfload
 
-    - name: Run pandoc for each Markdown file
-      run: |
-        for file in ./*.md; do
-          output_file="./pdf/$(basename "$file" .md).pdf"
-          echo "Converting $file to $output_file"
-          
-          pandoc -s "$file" -o "$output_file" --pdf-engine=xelatex
-          
-          if [ $? -ne 0 ]; then
-              echo "Error converting $file to PDF."
-              exit 1
-          fi
-        done
+    - name: Run pandoc
+      run: pandoc -s ./syllabus.md -o ./pdf/syllabus.pdf --pdf-engine=xelatex
+
+    - name: Run pandoc
+      run: pandoc -s ./schedule.md -o ./pdf/schedule.pdf --pdf-engine=xelatex
 
     - name: Upload PDF as Release Artifact
       uses: actions/upload-artifact@v2
