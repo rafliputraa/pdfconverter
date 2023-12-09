@@ -22,11 +22,18 @@ jobs:
     - name: Install LaTeX packages
       run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra
 
-    - name: Run pandoc
+    - name: Run pandoc for each Markdown file
       run: |
-        for file in ./*.md; do
+        for file in ./markdown/*.md; do
           output_file="./pdf/$(basename "$file" .md).pdf"
+          echo "Converting $file to $output_file"
+          
           pandoc -s "$file" -o "$output_file" --pdf-engine=xelatex
+          
+          if [ $? -ne 0 ]; then
+              echo "Error converting $file to PDF."
+              exit 1
+          fi
         done
 
     - name: Upload PDF as Release Artifact
