@@ -32,7 +32,7 @@ Let's dive into the details.
 
 ### Exercise 1: Markdown Basics
 
-Create a Markdown file that includes various formatting elements such as **bold**, *italic*, and [links](https://example.com).
+Create a Markdown file that includes various formatting elements such as **bold**, *italic*, and [links](https://example.com). Additionally, visit [Google](https://www.google.com).
 
 ### Assignment 1: LaTeX Introduction
 
@@ -40,7 +40,7 @@ Write a LaTeX document that demonstrates the use of mathematical symbols and equ
 
 ### Exercise 2: Unicode Characters
 
-Explore and include various Unicode characters in a Markdown file. Pay attention to characters that might cause issues during conversion.
+Explore and include various Unicode characters in a Markdown file. Pay attention to characters that might cause issues during conversion, such as ≥ (greater than or equal to, Unicode U+2265).
 
 ### Assignment 2: Advanced Formatting
 
