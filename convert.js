@@ -6,7 +6,12 @@ async function convertMarkdownToPDF(inputPath, outputPath) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  await page.goto(`file://${inputPath}`, { waitUntil: 'networkidle0' });
+  // Load content directly instead of using file:// URL
+  const markdownContent = fs.readFileSync(inputPath, 'utf-8');
+  await page.setContent(markdownContent);
+
+  // Wait for network idle just in case there are external resources (like images) in the Markdown
+  await page.waitForLoadState('networkidle0');
 
   const outputFileName = path.basename(inputPath, path.extname(inputPath)) + '.pdf';
   const outputFullPath = path.join('pdf', outputFileName);
