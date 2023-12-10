@@ -25,6 +25,9 @@ jobs:
 
     - name: Install LaTeX packages
       run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra texlive-luatex
+    
+    - name: Create PDF folder
+      run: mkdir -p ./pdf
 
     - name: Run pandoc
       run: pandoc -s ./syllabus.md -o ./pdf/syllabus.pdf --pdf-engine=xelatex -V mainfont='Noto Serif CJK SC'
