@@ -13,20 +13,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up pandoc
-      run: sudo apt-get install pandoc
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-    - name: Install pdflatex
-      run: sudo apt-get install texlive-xetex
+    - name: Install dependencies
+      run: npm install
 
-    - name: Install LaTeX packages
-      run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra texlive-luatex
+    - name: Run conversion script
+      run: node convert.js syllabus.md
 
-    - name: Run pandoc
-      run: pandoc -s ./syllabus.md -o ./pdf/syllabus.pdf --pdf-engine=xelatex
-
-    - name: Run pandoc
-      run: pandoc -s ./schedule.md -o ./pdf/schedule.pdf --pdf-engine=xelatex
+    - name: Run conversion script
+      run: node convert.js schedule.md
 
     - name: Upload PDF as Release Artifact
       uses: actions/upload-artifact@v3
