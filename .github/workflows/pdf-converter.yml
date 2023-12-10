@@ -13,40 +13,24 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+    - name: Set up pandoc
+      run: sudo apt-get install pandoc
 
-    - name: Install dependencies
-      run: npm install puppeteer
-
-    - name: Run conversion script
+    - name: Install pdflatex
+      run: sudo apt-get install texlive-xetex
+    
+    - name: Install Pandoc and Fonts
       run: |
-          node -e "const fs = require('fs');
-          const puppeteer = require('puppeteer');
+        sudo apt-get install -y pandoc fonts-noto-cjk
 
-          async function convertMarkdownToPDF(inputPath, outputPath) {
-            const markdownContent = fs.readFileSync(inputPath, 'utf-8');
+    - name: Install LaTeX packages
+      run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra texlive-luatex
 
-            const browser = await puppeteer.launch();
-            const page = await browser.newPage();
+    - name: Run pandoc
+      run: pandoc -s ./syllabus.md -o ./pdf/syllabus.pdf --pdf-engine=xelatex -V mainfont='Noto Serif CJK SC
 
-            await page.setContent(markdownContent, { waitUntil: 'networkidle0' });
-
-            const outputFileName = outputPath;
-            await page.pdf({ path: outputFileName, format: 'A4' });
-
-            await browser.close();
-          }
-
-          const inputFiles = ['syllabus.md', 'schedule.md'];  // Add more files as needed
-          const outputFolder = 'pdf';
-
-          for (const inputFile of inputFiles) {
-            const outputFileName = \`\${outputFolder}/\${inputFile.replace(/\\.md$/, '.pdf')}\`;
-            convertMarkdownToPDF(inputFile, outputFileName);
-          }"
+    - name: Run pandoc
+      run: pandoc -s ./schedule.md -o ./pdf/schedule.pdf --pdf-engine=xelatex -V mainfont='Noto Serif CJK SC
 
     - name: Upload PDF as Release Artifact
       uses: actions/upload-artifact@v3
