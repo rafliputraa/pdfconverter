@@ -23,7 +23,7 @@ jobs:
 
     - name: Run conversion script
       run: |
-          const fs = require('fs');
+          node -e "const fs = require('fs');
           const puppeteer = require('puppeteer');
 
           async function convertMarkdownToPDF(inputPath, outputPath) {
@@ -40,13 +40,13 @@ jobs:
             await browser.close();
           }
 
-          const inputFiles = ['input1.md', 'input2.md'];  // Add more files as needed
+          const inputFiles = ['syllabus.md', 'schedule.md'];  // Add more files as needed
           const outputFolder = 'pdf';
 
           for (const inputFile of inputFiles) {
-            const outputFileName = `${outputFolder}/${inputFile.replace(/\.md$/, '.pdf')}`;
+            const outputFileName = \`\${outputFolder}/\${inputFile.replace(/\\.md$/, '.pdf')}\`;
             convertMarkdownToPDF(inputFile, outputFileName);
-          }
+          }"
 
     - name: Upload PDF as Release Artifact
       uses: actions/upload-artifact@v3
