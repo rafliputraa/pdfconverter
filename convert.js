@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
+const fs = require('fs');
 
 async function convertMarkdownToPDF(inputPath, outputPath) {
   const browser = await puppeteer.launch();
@@ -8,7 +9,12 @@ async function convertMarkdownToPDF(inputPath, outputPath) {
   await page.goto(`file://${inputPath}`, { waitUntil: 'networkidle0' });
 
   const outputFileName = path.basename(inputPath, path.extname(inputPath)) + '.pdf';
-  const outputFullPath = path.join(path.dirname(inputPath), outputFileName);
+  const outputFullPath = path.join('pdf', outputFileName);
+
+  // Ensure the 'pdf' folder exists
+  if (!fs.existsSync('pdf')) {
+    fs.mkdirSync('pdf');
+  }
 
   await page.pdf({ path: outputFullPath, format: 'A4' });
 
