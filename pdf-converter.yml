@@ -13,18 +13,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up pandoc
-      run: sudo apt-get install pandoc
-
-    - name: Install pdflatex
-      run: sudo apt-get install texlive-xetex
-    
-    - name: Install Pandoc and Fonts
+    - name: Install Dependencies
       run: |
-        sudo apt-get install -y pandoc fonts-noto-cjk
-
-    - name: Install LaTeX packages
-      run: sudo apt-get install texlive-fonts-recommended texlive-fonts-extra texlive-luatex
+        sudo apt-get update && \
+        sudo apt-get install -y pandoc texlive-xetex pandoc fonts-noto-cjk texlive-fonts-recommended texlive-fonts-extra texlive-luatex
     
     - name: Create PDF folder
       run: mkdir -p ./pdf
