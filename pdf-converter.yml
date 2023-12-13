@@ -26,6 +26,9 @@ jobs:
 
     - name: Run pandoc
       run: pandoc -s ./schedule.md -o ./pdf/schedule.pdf --pdf-engine=xelatex -V mainfont='Noto Serif CJK SC'
+    
+    - name: Move PDF files to repo root
+      run: cp ./pdf/* .
 
     - name: Upload PDF as Release Artifact
       uses: actions/upload-artifact@v3
